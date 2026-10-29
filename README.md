@@ -9,17 +9,6 @@
 
 ResolveAI is an intelligent, full-stack customer support and ticketing platform. It provides seamless ticket management, threaded customer-agent messaging, role-based workflows, and an autonomous AI support assistant powered by Groq / LLMs to automatically resolve customer inquiries and assist support agents with suggested replies.
 
----
-
-## 🔗 Quick Test & Demo Links
-
-| Resource | Link / Details | Description |
-| :--- | :--- | :--- |
-| **🌐 Frontend Application** | [http://localhost:5173](http://localhost:5173) | Interactive Customer & Agent Portal |
-| **⚙️ Backend API Health & Config** | [http://localhost:8081/api/ai/config](http://localhost:8081/api/ai/config) | AI Engine status & LLM readiness endpoint |
-| **📬 Postman Collection** | [`postman/ResolveAI_Postman_Collection.json`](./postman/ResolveAI_Postman_Collection.json) | Ready-to-import API test suite |
-| **🚀 GitHub Repository** | [https://github.com/Techieworld2004/resolve-ai](https://github.com/Techieworld2004/resolve-ai) | Source code and releases |
-| **🌍 Live Deployed Demo** | *`https://your-deployment-url.vercel.app` (Optional: Deploy on Vercel/Render)* | Production preview link |
 
 ---
 
