@@ -12,12 +12,7 @@ export default function AIChatWidget() {
   const [llmProvider, setLlmProvider] = useState(() => localStorage.getItem('resolveai_llm_provider') || 'groq');
   const [llmApiKey, setLlmApiKey] = useState(() => localStorage.getItem('resolveai_llm_key') || '');
   const [llmModel, setLlmModel] = useState(() => {
-    const saved = localStorage.getItem('resolveai_llm_model');
-    if (!saved || saved.includes('llama')) {
-      localStorage.setItem('resolveai_llm_model', 'openai/gpt-oss-120b');
-      return 'openai/gpt-oss-120b';
-    }
-    return saved;
+    return localStorage.getItem('resolveai_llm_model') || 'llama-3.3-70b-versatile';
   });
   const [showApiKeyText, setShowApiKeyText] = useState(false);
   const [testStatus, setTestStatus] = useState(null); // { success: boolean, msg: string }
@@ -489,14 +484,14 @@ export default function AIChatWidget() {
                         type="text"
                         value={llmModel}
                         onChange={(e) => setLlmModel(e.target.value)}
-                        placeholder={llmProvider === 'groq' ? 'openai/gpt-oss-120b' : llmProvider === 'gemini' ? 'gemini-1.5-flash' : 'gpt-4o-mini'}
+                        placeholder={llmProvider === 'groq' ? 'llama-3.3-70b-versatile' : llmProvider === 'gemini' ? 'gemini-1.5-flash' : 'gpt-4o-mini'}
                         className="input-sm"
                       />
                       {llmProvider === 'groq' && (
                         <div className="model-quick-chips">
-                          <button type="button" className="quick-chip-btn" onClick={() => setLlmModel('openai/gpt-oss-120b')}>GPT OSS 120B</button>
-                          <button type="button" className="quick-chip-btn" onClick={() => setLlmModel('openai/gpt-oss-20b')}>GPT OSS 20B</button>
-                          <button type="button" className="quick-chip-btn" onClick={() => setLlmModel('qwen/qwen3.8-27b')}>Qwen 27B</button>
+                          <button type="button" className="quick-chip-btn" onClick={() => setLlmModel('llama-3.3-70b-versatile')}>Llama 3.3 70B</button>
+                          <button type="button" className="quick-chip-btn" onClick={() => setLlmModel('llama-3.1-8b-instant')}>Llama 3.1 8B</button>
+                          <button type="button" className="quick-chip-btn" onClick={() => setLlmModel('mixtral-8x7b-32768')}>Mixtral 8x7B</button>
                         </div>
                       )}
                     </div>

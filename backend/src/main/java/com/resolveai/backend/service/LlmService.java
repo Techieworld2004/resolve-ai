@@ -99,8 +99,8 @@ public class LlmService {
                 String resolvedModel = (activeModel != null && !activeModel.isBlank() && !activeModel.contains("gemini"))
                         ? activeModel
                         : defaultModel;
-                if (resolvedModel == null || resolvedModel.isBlank() || resolvedModel.contains("llama")) {
-                    resolvedModel = "openai/gpt-oss-120b";
+                if (resolvedModel == null || resolvedModel.isBlank() || resolvedModel.contains("gemini")) {
+                    resolvedModel = (defaultModel != null && !defaultModel.isBlank()) ? defaultModel : "llama-3.3-70b-versatile";
                 }
 
                 try {
@@ -110,13 +110,13 @@ public class LlmService {
                         return new LlmResult(text, "groq", resolvedModel);
                     }
                 } catch (Exception e) {
-                    log.warn("Groq LLM call with [{}] failed: {}. Retrying with fallback model openai/gpt-oss-120b...", resolvedModel, e.getMessage());
-                    if (!"openai/gpt-oss-120b".equalsIgnoreCase(resolvedModel)) {
+                    log.warn("Groq LLM call with [{}] failed: {}. Retrying with fallback model llama-3.1-8b-instant...", resolvedModel, e.getMessage());
+                    if (!"llama-3.1-8b-instant".equalsIgnoreCase(resolvedModel)) {
                         try {
-                            String text = callOpenAiCompatible(groqEndpoint, userMessage, systemPrompt, apiKey, "openai/gpt-oss-120b");
+                            String text = callOpenAiCompatible(groqEndpoint, userMessage, systemPrompt, apiKey, "llama-3.1-8b-instant");
                             if (text != null && !text.isBlank()) {
-                                log.info("Successfully generated reply using Groq fallback (openai/gpt-oss-120b)");
-                                return new LlmResult(text, "groq", "openai/gpt-oss-120b");
+                                log.info("Successfully generated reply using Groq fallback (llama-3.1-8b-instant)");
+                                return new LlmResult(text, "groq", "llama-3.1-8b-instant");
                             }
                         } catch (Exception ex) {
                             log.warn("Groq fallback call also failed: {}", ex.getMessage());

@@ -12,6 +12,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import java.util.List;
 
 /**
@@ -27,6 +28,14 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    /**
+     * Disable the default generated security password on boot.
+     */
+    @Bean
+    public InMemoryUserDetailsManager userDetailsService() {
+        return new InMemoryUserDetailsManager();
+    }
 
     /**
      * BCrypt password encoder used throughout the application.
