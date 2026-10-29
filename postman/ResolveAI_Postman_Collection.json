@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Resolve AI API Collection (Complete)",
+		"description": "Full REST API collection for ResolveAI customer support platform including Users, Tickets, and Threaded Messages.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8081/api",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "1. Users & Auth",
+			"item": [
+				{
+					"name": "Register User (Customer)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"David Miller\",\n  \"email\": \"david@example.com\",\n  \"password\": \"secret123\",\n  \"role\": \"CUSTOMER\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "register"]
+						}
+					}
+				},
+				{
+					"name": "Register User (Support Agent)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"Emma Watson\",\n  \"email\": \"emma.agent@resolveai.com\",\n  \"password\": \"agent123\",\n  \"role\": \"AGENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"customer@resolveai.com\",\n  \"password\": \"customer123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["users"]
+						}
+					}
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "1"]
+						}
+					}
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"David Miller Jr.\",\n  \"role\": \"CUSTOMER\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/4",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "4"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Tickets",
+			"item": [
+				{
+					"name": "Create New Ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user\": { \"userId\": 3 },\n  \"subject\": \"Postman Test: Webhook timeout error\",\n  \"description\": \"Webhook callback takes over 5 seconds to respond intermittently.\",\n  \"priority\": \"HIGH\",\n  \"category\": \"Technical\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tickets",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets"]
+						}
+					}
+				},
+				{
+					"name": "Get All Tickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tickets",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets"]
+						}
+					}
+				},
+				{
+					"name": "Filter Tickets by Status (OPEN)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tickets?status=OPEN",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets"],
+							"query": [
+								{
+									"key": "status",
+									"value": "OPEN"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Ticket by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tickets/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Tickets by User ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tickets/user/3",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets", "user", "3"]
+						}
+					}
+				},
+				{
+					"name": "Get Tickets by Agent ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tickets/agent/2",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets", "agent", "2"]
+						}
+					}
+				},
+				{
+					"name": "Update Ticket Status (PATCH)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"RESOLVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tickets/1/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets", "1", "status"]
+						}
+					}
+				},
+				{
+					"name": "Assign Ticket to Agent (PUT)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"assignedTo\": { \"userId\": 2 },\n  \"status\": \"IN_PROGRESS\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tickets/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Ticket",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tickets/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Messages & Conversation",
+			"item": [
+				{
+					"name": "Post Message to Ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ticketId\": 2,\n  \"senderId\": 2,\n  \"messageText\": \"Postman message: I have investigated this issue and updated your settings.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["messages"]
+						}
+					}
+				},
+				{
+					"name": "Get All Messages for a Ticket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/messages/ticket/2",
+							"host": ["{{baseUrl}}"],
+							"path": ["messages", "ticket", "2"]
+						}
+					}
+				},
+				{
+					"name": "Get All Messages across System",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["messages"]
+						}
+					}
+				},
+				{
+					"name": "Get Messages of Specific Ticket (via Ticket Route)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tickets/2/messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["tickets", "2", "messages"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. ResolveAI Intelligent Assistant & Chatbot",
+			"item": [
+				{
+					"name": "AI Chatbot - Greeting & Capabilities",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Hello, what can you do?\",\n  \"userId\": 4\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ai/chat",
+							"host": ["{{baseUrl}}"],
+							"path": ["ai", "chat"]
+						}
+					}
+				},
+				{
+					"name": "AI Chatbot - Track Ticket Status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"What is the status of ticket #2?\",\n  \"userId\": 4\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ai/chat",
+							"host": ["{{baseUrl}}"],
+							"path": ["ai", "chat"]
+						}
+					}
+				},
+				{
+					"name": "AI Chatbot - Troubleshoot Billing 504 Timeout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"I got a 504 timeout when paying my bill\",\n  \"userId\": 4\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ai/chat",
+							"host": ["{{baseUrl}}"],
+							"path": ["ai", "chat"]
+						}
+					}
+				},
+				{
+					"name": "AI Generate Suggested Reply for Ticket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/ai/suggest-reply/2",
+							"host": ["{{baseUrl}}"],
+							"path": ["ai", "suggest-reply", "2"]
+						}
+					}
+				},
+				{
+					"name": "AI Summon Bot to Post Diagnostic in Ticket Thread",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/ai/ticket-assist/2",
+							"host": ["{{baseUrl}}"],
+							"path": ["ai", "ticket-assist", "2"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
