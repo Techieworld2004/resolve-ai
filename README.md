@@ -154,7 +154,23 @@ resolve-ai/
    ```
 
 4. Open your browser and navigate to:
-   - **URL**: `http://localhost:5173`
+   - **Localhost**: `http://localhost:5173` or `http://127.0.0.1:5173`
+   - **Local Network (Wi-Fi)**: `http://192.168.1.66:5173` *(access from other devices on your LAN)*
+
+---
+
+## 🌐 Localhost & Network IP Addresses
+
+| Component | Host / IP Address | URL | Description |
+| :--- | :--- | :--- | :--- |
+| **Frontend Web App** | `localhost` | [http://localhost:5173](http://localhost:5173) | Primary in-browser client |
+| **Frontend Web App** | `127.0.0.1` | [http://127.0.0.1:5173](http://127.0.0.1:5173) | IPv4 Loopback |
+| **Frontend (LAN / Wi-Fi)** | `192.168.1.66` | [http://192.168.1.66:5173](http://192.168.1.66:5173) | Mobile phones, tablets, or other PCs |
+| **Frontend (WSL Switch)** | `172.23.128.1` | [http://172.23.128.1:5173](http://172.23.128.1:5173) | Windows Subsystem for Linux / Hyper-V |
+| **Backend REST API** | `localhost:8081` | [http://localhost:8081/api](http://localhost:8081/api) | Spring Boot REST endpoints |
+| **Backend REST API (LAN)** | `192.168.1.66:8081` | [http://192.168.1.66:8081/api](http://192.168.1.66:8081/api) | Direct API calls across local network |
+
+> 📱 **Network Access**: Vite has `server.host: true` enabled and backend CORS allows `*` origin patterns, allowing any device connected to your local Wi-Fi to load the UI at `http://192.168.1.66:5173`.
 
 ---
 

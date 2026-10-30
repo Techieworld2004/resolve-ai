@@ -19,7 +19,7 @@ export default function AIChatWidget() {
 
   // Connection & status state
   const [backendStatus, setBackendStatus] = useState('online'); // 'online' | 'offline' | 'checking'
-  const [serverLlmInfo, setServerLlmInfo] = useState(null);
+  const [_serverLlmInfo, setServerLlmInfo] = useState(null);
 
   // Chat conversation state
   const [messages, setMessages] = useState([
@@ -50,6 +50,19 @@ export default function AIChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const checkBackendHealth = async () => {
+    try {
+      const res = await aiAPI.getConfig();
+      setBackendStatus('online');
+      setServerLlmInfo(res.data);
+      return true;
+    } catch (err) {
+      console.warn('Backend not detected on port 8081:', err?.message);
+      setBackendStatus('offline');
+      return false;
+    }
+  };
+
   // Check backend config on mount & auto-reconnect
   useEffect(() => {
     checkBackendHealth();
@@ -66,19 +79,6 @@ export default function AIChatWidget() {
       window.removeEventListener('focus', onFocus);
     };
   }, []);
-
-  const checkBackendHealth = async () => {
-    try {
-      const res = await aiAPI.getConfig();
-      setBackendStatus('online');
-      setServerLlmInfo(res.data);
-      return true;
-    } catch (err) {
-      console.warn('Backend not detected on port 8081:', err?.message);
-      setBackendStatus('offline');
-      return false;
-    }
-  };
 
   useEffect(() => {
     if (isOpen) {
@@ -112,7 +112,7 @@ export default function AIChatWidget() {
         success: true,
         msg: `Connected via ${res.data?.provider || llmProvider} (${res.data?.model || llmModel})!`
       });
-    } catch (err) {
+    } catch (_err) {
       setTestStatus({
         success: false,
         msg: 'Connection test failed. Check your API key or ensure backend is running.'
@@ -276,7 +276,7 @@ export default function AIChatWidget() {
     return lines.map((line, lineIdx) => {
       // Bullet point detection
       const isBullet = line.trim().startsWith('•') || line.trim().startsWith('- ') || line.trim().startsWith('* ');
-      const cleanLine = isBullet ? line.trim().replace(/^([•\-\*]\s*)/, '') : line;
+      const cleanLine = isBullet ? line.trim().replace(/^([•\-*]\s*)/, '') : line;
 
       // Split line by bold (**...**) and inline code (`...`)
       const parts = cleanLine.split(/(\*\*.*?\*\*|`.*?`|\*.*?\*)/g);

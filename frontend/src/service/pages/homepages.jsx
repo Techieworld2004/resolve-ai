@@ -11,16 +11,6 @@ export default function HomePage() {
   const [status, setStatus] = useState('checking...');
   const bottomRef = useRef(null);
 
-  // ✅ Health Check on load
-  useEffect(() => {
-    checkHealth();
-  }, []);
-
-  // ✅ Auto scroll
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
   const checkHealth = async () => {
     try {
       const res = await aiAPI.getConfig();
@@ -33,6 +23,16 @@ export default function HomePage() {
       setStatus('❌ Backend Offline');
     }
   };
+
+  // ✅ Health Check on load
+  useEffect(() => {
+    checkHealth();
+  }, []);
+
+  // ✅ Auto scroll
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
@@ -55,7 +55,7 @@ export default function HomePage() {
         sender: 'bot'
       };
       setMessages(prev => [...prev, botMsg]);
-    } catch (err) {
+    } catch (_err) {
       setMessages(prev => [...prev, {
         id: Date.now() + 1,
         text: '❌ Error: Unable to reach AI backend on port 8081. Please ensure backend is running.',
